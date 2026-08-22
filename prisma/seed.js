@@ -45,6 +45,19 @@ async function main() {
     },
   });
 
+  const demoUser2 = await prisma.user.create({
+    data: {
+      id: uuidv4(),
+      firstName: 'Demo',
+      lastName: 'Traveler',
+      email: 'demo@globetrotter.com',
+      passwordHash: await bcrypt.hash('demo123', 10),
+      role: 'user',
+      city: 'Mumbai',
+      country: 'India',
+    },
+  });
+
   console.log('✅ Users created');
 
   // Create 20 cities

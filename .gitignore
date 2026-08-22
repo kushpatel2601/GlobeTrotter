@@ -24,7 +24,6 @@ npm-debug.log*
 .env*.local
 
 # prisma
-prisma/dev.db
 prisma/dev.db-journal
 
 # vercel
