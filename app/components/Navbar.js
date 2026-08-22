@@ -61,7 +61,11 @@ export default function Navbar() {
     <>
       {/* Desktop Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`} id="sidebar">
-        <div className="sidebar-logo">
+        <div
+          className="sidebar-logo"
+          onClick={() => router.push('/dashboard')}
+          style={{ cursor: 'pointer' }}
+        >
           <h2>🌍 GlobeTrotter</h2>
           <span>Plan. Explore. Share.</span>
         </div>

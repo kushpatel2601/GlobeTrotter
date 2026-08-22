@@ -104,7 +104,7 @@ export default function DashboardPage() {
         {/* Welcome Header */}
         <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
           <div>
-            <h1>Namaste, {user.firstName}! ✈️</h1>
+            <h1>Welcome, {user.firstName}! ✈️</h1>
             <p>Here is an overview of your travel plans and popular destinations to explore.</p>
           </div>
           <button
