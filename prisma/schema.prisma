@@ -1,0 +1,96 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  firstName    String
+  lastName     String
+  email        String   @unique
+  passwordHash String
+  phone        String?
+  city         String?
+  country      String?
+  avatar       String?
+  language     String   @default("en")
+  role         String   @default("user")
+  createdAt    DateTime @default(now())
+  trips        Trip[]
+}
+
+model Trip {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  coverImage  String?
+  startDate   DateTime
+  endDate     DateTime
+  budget      Float?
+  isPublic    Boolean  @default(false)
+  shareSlug   String?  @unique
+  status      String   @default("planning")
+  createdAt   DateTime @default(now())
+  stops       Stop[]
+}
+
+model Stop {
+  id                String     @id @default(uuid())
+  tripId            String
+  trip              Trip       @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  cityId            String
+  city              City       @relation(fields: [cityId], references: [id])
+  orderIndex        Int
+  arrivalDate       DateTime
+  departureDate     DateTime
+  transportCost     Float      @default(0)
+  accommodationCost Float      @default(0)
+  mealBudgetPerDay  Float      @default(0)
+  activities        Activity[]
+}
+
+model City {
+  id                 String             @id @default(uuid())
+  name               String
+  country            String
+  region             String
+  imageUrl           String?
+  description        String?
+  costIndex          Float              @default(1.0)
+  popularity         Int                @default(0)
+  stops              Stop[]
+  activityTemplates  ActivityTemplate[]
+}
+
+model Activity {
+  id              String            @id @default(uuid())
+  stopId          String
+  stop            Stop              @relation(fields: [stopId], references: [id], onDelete: Cascade)
+  templateId      String?
+  template        ActivityTemplate? @relation(fields: [templateId], references: [id])
+  name            String
+  category        String
+  cost            Float             @default(0)
+  durationMinutes Int               @default(60)
+  date            DateTime?
+  notes           String?
+}
+
+model ActivityTemplate {
+  id                String     @id @default(uuid())
+  cityId            String
+  city              City       @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  name              String
+  category          String
+  description       String?
+  imageUrl          String?
+  estimatedCost     Float      @default(0)
+  estimatedDuration Int        @default(60)
+  activities        Activity[]
+}
