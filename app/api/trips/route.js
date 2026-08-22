@@ -2,6 +2,8 @@ const { NextResponse } = require('next/server');
 const prisma = require('../../../lib/prisma');
 const { getUserFromRequest } = require('../../../lib/auth');
 
+export const dynamic = 'force-dynamic';
+
 // GET /api/trips - get all trips for logged in user
 export async function GET(request) {
   try {

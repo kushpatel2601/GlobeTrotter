@@ -1,6 +1,8 @@
 const { NextResponse } = require('next/server');
 const prisma = require('../../../lib/prisma');
 
+export const dynamic = 'force-dynamic';
+
 // GET /api/activities - Search and filter activity templates
 export async function GET(request) {
   try {

@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import CityCard from '../components/CityCard';
@@ -7,7 +7,7 @@ import CityCard from '../components/CityCard';
 const REGIONS = ['All', 'Europe', 'Asia', 'Americas', 'Middle East', 'Africa'];
 const CATEGORIES = ['all', 'sightseeing', 'food', 'adventure', 'culture', 'nightlife'];
 
-export default function ExplorePage() {
+function ExploreContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialQuery = searchParams ? searchParams.get('q') || '' : '';
@@ -481,5 +481,22 @@ export default function ExplorePage() {
         )}
       </main>
     </div>
+  );
+}
+
+export default function ExplorePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="app-layout">
+          <Navbar />
+          <main className="main-content">
+            <div className="loading-spinner"><div className="spinner"></div></div>
+          </main>
+        </div>
+      }
+    >
+      <ExploreContent />
+    </Suspense>
   );
 }

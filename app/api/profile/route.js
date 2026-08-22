@@ -2,6 +2,8 @@ const { NextResponse } = require('next/server');
 const prisma = require('../../../lib/prisma');
 const { getUserFromRequest, hashPassword } = require('../../../lib/auth');
 
+export const dynamic = 'force-dynamic';
+
 // GET /api/profile - fetch current user profile
 export async function GET(request) {
   try {
