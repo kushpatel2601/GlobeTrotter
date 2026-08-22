@@ -8,11 +8,14 @@
 [![Prisma ORM](https://img.shields.io/badge/Prisma-5.22-2D3748?style=for-the-badge&logo=prisma)](https://www.prisma.io/)
 [![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite)](https://www.sqlite.org/)
 [![JWT Auth](https://img.shields.io/badge/JWT-Authentication-gold?style=for-the-badge&logo=jsonwebtokens)](https://jwt.io/)
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live%20Demo-black?style=for-the-badge&logo=vercel)](https://globe-trotter-sigma.vercel.app/)
 [![License](https://img.shields.io/badge/License-MIT-emerald?style=for-the-badge)](LICENSE)
 
 *Built for the **Odoo × LDCE Hackathon 2026***
 
-[🚀 Live Demo](#-getting-started) • [✨ Key Features](#-key-features) • [🏛️ Architecture](#-system-architecture) • [📊 Database Schema](#-database-schema) • [🛠️ Tech Stack](#%EF%B8%8F-tech-stack)
+### 🌐 **Live Demo:** [https://globe-trotter-sigma.vercel.app/](https://globe-trotter-sigma.vercel.app/)
+
+[🚀 Live Website](https://globe-trotter-sigma.vercel.app/) • [✨ Key Features](#-key-features) • [🏛️ Architecture](#-system-architecture) • [📊 Database Schema](#-database-schema) • [🛠️ Tech Stack](#%EF%B8%8F-tech-stack) • [🔑 Demo Logins](#-demo-credentials)
 
 </div>
 
@@ -136,7 +139,18 @@ The SQLite database is normalized into **6 relational models**:
 
 ---
 
-## 🚀 Getting Started
+## 🌐 Live Production Deployment
+
+The project is hosted and running live on Vercel:
+👉 **[https://globe-trotter-sigma.vercel.app/](https://globe-trotter-sigma.vercel.app/)**
+
+* **Hosting:** Vercel Edge Serverless Functions with Next.js 14 App Router.
+* **Database:** SQLite with automatic `/tmp` write-enabled replication on serverless cold starts.
+* **Security:** JWT Authentication with `httpOnly` secure cookies & bcrypt hashing.
+
+---
+
+## 🚀 Local Development & Setup
 
 ### Prerequisites
 * **Node.js:** `v18.17.0` or higher
