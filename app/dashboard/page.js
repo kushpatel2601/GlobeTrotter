@@ -68,7 +68,7 @@ export default function DashboardPage() {
       });
 
       if (res.ok) {
-        setTrips(trips.filter((t) => t.id !== tripId));
+        setTrips((prev) => prev.filter((t) => t.id !== tripId));
       } else {
         alert('Could not delete trip. Please try again.');
       }

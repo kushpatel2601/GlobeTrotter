@@ -85,12 +85,26 @@ export async function DELETE(request, { params }) {
 
     const { id } = params;
 
-    const existing = await prisma.trip.findUnique({ where: { id } });
-    if (!existing || existing.userId !== user.id) {
-      return NextResponse.json({ error: 'Trip not found' }, { status: 404 });
+    // Delete related activities and stops first to ensure SQLite relational integrity
+    const stops = await prisma.stop.findMany({
+      where: { tripId: id },
+      select: { id: true },
+    });
+    const stopIds = stops.map((s) => s.id);
+
+    if (stopIds.length > 0) {
+      await prisma.activity.deleteMany({
+        where: { stopId: { in: stopIds } },
+      });
     }
 
-    await prisma.trip.delete({ where: { id } });
+    await prisma.stop.deleteMany({
+      where: { tripId: id },
+    });
+
+    await prisma.trip.delete({
+      where: { id },
+    });
 
     return NextResponse.json({ message: 'Trip deleted successfully' });
   } catch (error) {

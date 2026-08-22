@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 // simple helper to format dates nicely
@@ -23,6 +24,7 @@ function getStatusBadge(status) {
 
 export default function TripCard({ trip, onDelete }) {
   const router = useRouter();
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const cityNames = trip.stops
     ? trip.stops.map(s => s.city?.name).filter(Boolean).join(' → ')
@@ -69,29 +71,68 @@ export default function TripCard({ trip, onDelete }) {
 
         <div className="trip-card-actions" onClick={(e) => e.stopPropagation()}>
           <button
+            type="button"
             className="btn btn-secondary btn-sm"
-            onClick={() => router.push(`/trips/${trip.id}`)}
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push(`/trips/${trip.id}`);
+            }}
           >
             👁️ View
           </button>
           <button
+            type="button"
             className="btn btn-secondary btn-sm"
-            onClick={() => router.push(`/trips/${trip.id}/builder`)}
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push(`/trips/${trip.id}/builder`);
+            }}
           >
             ✏️ Edit
           </button>
           {onDelete && (
-            <button
-              className="btn btn-ghost btn-sm"
-              style={{ marginLeft: 'auto', color: 'var(--accent-danger)' }}
-              onClick={() => {
-                if (confirm('Are you sure you want to delete this trip?')) {
-                  onDelete(trip.id);
-                }
-              }}
-            >
-              🗑️
-            </button>
+            confirmDelete ? (
+              <div style={{ marginLeft: 'auto', display: 'flex', gap: 6 }} onClick={(e) => e.stopPropagation()}>
+                <button
+                  type="button"
+                  className="btn btn-danger btn-sm"
+                  style={{ padding: '6px 12px', fontSize: '0.75rem' }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onDelete(trip.id);
+                  }}
+                >
+                  Confirm Delete
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-sm"
+                  style={{ padding: '6px 10px', fontSize: '0.75rem' }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setConfirmDelete(false);
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm"
+                style={{ marginLeft: 'auto', color: 'var(--accent-danger)' }}
+                title="Delete Trip"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setConfirmDelete(true);
+                }}
+              >
+                🗑️
+              </button>
+            )
           )}
         </div>
       </div>
