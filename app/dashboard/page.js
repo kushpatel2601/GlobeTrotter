@@ -162,18 +162,22 @@ export default function DashboardPage() {
           }}
         >
           <div className="stat-card animate-fade-in-up stagger-1">
+            <div className="stat-icon">✈️</div>
             <div className="stat-value">{trips.length}</div>
             <div className="stat-label">Total Trips Created</div>
           </div>
           <div className="stat-card animate-fade-in-up stagger-2">
+            <div className="stat-icon">🗓️</div>
             <div className="stat-value">{activeTrips.length}</div>
             <div className="stat-label">Active / Upcoming Plans</div>
           </div>
           <div className="stat-card animate-fade-in-up stagger-3">
+            <div className="stat-icon">📍</div>
             <div className="stat-value">{totalDestinations}</div>
             <div className="stat-label">Cities / Stops Planned</div>
           </div>
           <div className="stat-card animate-fade-in-up stagger-4">
+            <div className="stat-icon">💰</div>
             <div className="stat-value" style={{ color: 'var(--accent-secondary)' }}>
               ${totalBudget.toLocaleString()}
             </div>
