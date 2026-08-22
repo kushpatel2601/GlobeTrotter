@@ -62,12 +62,12 @@ export default function LandingHomePage() {
       cost: '$$$$',
     },
     {
-      name: 'Barcelona',
-      country: 'Spain',
+      name: 'London',
+      country: 'UK',
       region: 'Europe',
-      image: 'https://images.unsplash.com/photo-1583422409516-2895a77efed6?w=800',
-      tag: 'Art & Beach',
-      cost: '$$',
+      image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800',
+      tag: 'Royal & Historic',
+      cost: '$$$',
     },
   ];
 
@@ -275,7 +275,7 @@ export default function LandingHomePage() {
               <div style={{ padding: 12, background: 'var(--bg-input)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>📍 Route Itinerary</div>
                 <div style={{ fontWeight: 700, color: 'var(--accent-primary)', marginTop: 4, fontSize: '0.875rem' }}>
-                  Paris → Barcelona → Rome
+                  Paris → London → Rome
                 </div>
               </div>
 
