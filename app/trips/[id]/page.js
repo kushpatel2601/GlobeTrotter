@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Navbar from '../../components/Navbar';
+import BudgetChart from '../../components/BudgetChart';
 
 function getCategoryBadge(cat) {
   const map = {
@@ -387,6 +388,27 @@ export default function TripDetailPage() {
                 <div className="budget-card-label">Stops Configured</div>
                 <div className="budget-card-value">{stops.length} Cities</div>
               </div>
+            </div>
+
+            {/* Interactive SVG Category Donut & Expense Chart */}
+            <div className="glass-card" style={{ padding: 28, marginBottom: 28 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+                <div>
+                  <h3 style={{ fontSize: '1.125rem' }}>🥧 Visual Expense Breakdown</h3>
+                  <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>
+                    Hover over chart slices to inspect category totals and budget utilization
+                  </p>
+                </div>
+                <span className="badge badge-ongoing">Live Interactive</span>
+              </div>
+
+              <BudgetChart
+                transportCost={totalTransportCost}
+                accommodationCost={totalAccommodationCost}
+                mealCost={totalMealCost}
+                activitiesCost={totalActivitiesCost}
+                targetBudget={trip.budget || 0}
+              />
             </div>
 
             {/* Visual Budget Breakdown Cards */}
