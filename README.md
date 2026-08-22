@@ -186,7 +186,7 @@ node prisma/seed.js
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Visit the application in your browser or test the live deployment at **[https://globe-trotter-sigma.vercel.app/](https://globe-trotter-sigma.vercel.app/)**.
 
 ---
 
