@@ -6,7 +6,7 @@ export default function RegisterPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: '', lastName: '', email: '', password: '',
-    phone: '', city: '', country: '', additionalInfo: '',
+    phone: '', city: '', country: '', avatar: '', additionalInfo: '',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,6 +14,22 @@ export default function RegisterPage() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError('');
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        setError('Image must be less than 2MB');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, avatar: reader.result });
+        setError('');
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -60,24 +76,22 @@ export default function RegisterPage() {
             <p>Create your account and start exploring</p>
           </div>
 
-          {/* Photo Upload Circle */}
+          {/* Photo Preview Circle */}
           <div style={{ textAlign: 'center', marginBottom: 24 }}>
             <div style={{
               width: 80, height: 80, borderRadius: '50%', margin: '0 auto',
               background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary))',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '2rem', cursor: 'pointer', position: 'relative',
+              fontSize: '2rem', position: 'relative', overflow: 'hidden',
               border: '3px solid var(--border-medium)',
             }}>
-              📷
-              <span style={{
-                position: 'absolute', bottom: -2, right: -2, width: 24, height: 24,
-                borderRadius: '50%', background: 'var(--accent-primary)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '0.75rem', color: '#000', fontWeight: 700,
-              }}>+</span>
+              {formData.avatar ? (
+                <img src={formData.avatar} alt="Avatar Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                '📷'
+              )}
             </div>
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: 8 }}>Upload Photo</p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: 8 }}>Avatar Preview</p>
           </div>
 
           <form className="auth-form" onSubmit={handleSubmit} id="register-form">
@@ -140,6 +154,15 @@ export default function RegisterPage() {
                 className="form-input" type="password" id="reg-password" name="password"
                 placeholder="At least 6 characters" value={formData.password}
                 onChange={handleChange} required minLength={6}
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="reg-avatar">Upload Profile Photo (Optional)</label>
+              <input
+                className="form-input" type="file" id="reg-avatar" name="avatar"
+                accept="image/*" onChange={handleFileChange}
+                style={{ paddingTop: 10 }}
               />
             </div>
 

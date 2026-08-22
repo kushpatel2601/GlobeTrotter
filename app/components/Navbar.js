@@ -22,14 +22,24 @@ export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      try {
-        setUser(JSON.parse(userData));
-      } catch {
+    const loadUser = () => {
+      const userData = localStorage.getItem('user');
+      if (userData) {
+        try {
+          setUser(JSON.parse(userData));
+        } catch {
+          setUser(null);
+        }
+      } else {
         setUser(null);
       }
-    }
+    };
+
+    loadUser();
+
+    // Listen for custom event to update user data without reload
+    window.addEventListener('userUpdated', loadUser);
+    return () => window.removeEventListener('userUpdated', loadUser);
   }, []);
 
   const handleLogout = () => {
@@ -79,8 +89,12 @@ export default function Navbar() {
         <div className="sidebar-footer">
           {user && (
             <div className="user-info">
-              <div className="user-avatar">
-                {user.firstName?.[0]}{user.lastName?.[0]}
+              <div className="user-avatar" style={{ overflow: 'hidden' }}>
+                {user.avatar ? (
+                  <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  <>{user.firstName?.[0]}{user.lastName?.[0]}</>
+                )}
               </div>
               <div className="user-details">
                 <div className="user-name">{user.firstName} {user.lastName}</div>

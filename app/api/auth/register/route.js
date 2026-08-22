@@ -5,7 +5,7 @@ const { hashPassword, signToken } = require('../../../../lib/auth');
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { firstName, lastName, email, password, phone, city, country } = body;
+    const { firstName, lastName, email, password, phone, city, country, avatar } = body;
 
     if (!firstName || !lastName || !email || !password) {
       return NextResponse.json(
@@ -33,6 +33,7 @@ export async function POST(request) {
         phone: phone || null,
         city: city || null,
         country: country || null,
+        avatar: avatar || null,
       },
     });
 
@@ -51,6 +52,7 @@ export async function POST(request) {
         lastName: user.lastName,
         email: user.email,
         role: user.role,
+        avatar: user.avatar,
         city: user.city,
         country: user.country,
       },
